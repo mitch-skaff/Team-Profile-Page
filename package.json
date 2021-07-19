@@ -1,0 +1,33 @@
+{
+  "name": "team-profile-page",
+  "version": "1.0.0",
+  "description": "Command-line application to help build team profiles",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mitch-skaff/Team-Profile-Page.git"
+  },
+  "keywords": [
+    "node",
+    "jest",
+    "inquirer"
+  ],
+  "author": "Mitchel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mitch-skaff/Team-Profile-Page/issues"
+  },
+  "homepage": "https://github.com/mitch-skaff/Team-Profile-Page#readme",
+  "dependencies": {
+    "inquirer": "^8.1.2"
+  },
+  "devDependencies": {
+    "jest": "^27.0.6"
+  }
+}
