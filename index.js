@@ -4,7 +4,6 @@ const fs = require("fs");
 
 const html = require("./src/html.js");
 
-const Employee = require("./lib/Employee")
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 const Manager = require("./lib/Manager");
@@ -134,14 +133,17 @@ function addEmployeeQuestion(){
     .then(response =>{
         if(response.addEmployee === true){
             employeeQuestions();
-        }else{
-            writeToFile("./dist/index.html", team);
+
+        } else{
+            writeToFile("./dist/index.html", teamMembers);
         }
     })
 }
 
 function writeToFile(fileName, data) {
+
     fs.writeFile(fileName, html(data), 
+        // check for error, if not log to console success
         (err) => err ? console.error(err) : console.log("\nSuccess! Your HTML file has been generated.")
     );
 }
