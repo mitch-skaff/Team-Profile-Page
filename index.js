@@ -4,6 +4,7 @@ const fs = require("fs");
 
 const html = require("./src/html.js");
 
+const Employee = require("./lib/Employee");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 const Manager = require("./lib/Manager");
@@ -42,15 +43,15 @@ function employeeQuestions () {
 
     .then(answer => {
         if(answer.role === "Engineer")
-            internQuestion(answer.name, answer.email, answer.id);
+            engineerQuestion(answer.name, answer.id, answer.email);
         
         else if(answer.role === "Intern")
-            engineerQuestion(answer.name, answer.email, answer.id);
+            internQuestion(answer.name, answer.id, answer.email);
     });
 };
 
 // build off generic question then add additional intern question if necessary
-function internQuestion(name, email, id){
+function internQuestion(name, id, email){
     inquirer.prompt([
         {
             type: "input",
@@ -59,7 +60,7 @@ function internQuestion(name, email, id){
         }
     ])
     .then(answer => {
-        const newIntern = new Intern(name, email, id, answer.school);
+        const newIntern = new Intern(name, id, email, answer.school);
         
         employees.push(newIntern);
         addEmployeeQuestion();
@@ -67,7 +68,7 @@ function internQuestion(name, email, id){
 };
 
 // build off generic question then add additional engineer question if necessary
-function engineerQuestion(name, email, id){
+function engineerQuestion(name, id, email){
     inquirer.prompt([
         {
             type: "input",
@@ -76,7 +77,7 @@ function engineerQuestion(name, email, id){
         }
     ])
     .then(answer => {
-        const newEngineer = new Engineer(name, email, id, answer.github);
+        const newEngineer = new Engineer(name, id, email, answer.github);
 
         employees.push(newEngineer);
         addEmployeeQuestion();
@@ -86,7 +87,7 @@ function engineerQuestion(name, email, id){
 // add manager questions
 function managerQuestions(){
     // give user instructions to build team
-    console.log("\nPlease build your team")
+    console.log("\nPlease build your team!")
     
     inquirer.prompt([
         {
@@ -113,7 +114,7 @@ function managerQuestions(){
         }
     ])
     .then(answers => {
-        const newManager = new Manager(answers.name, answers.email, answers.id, answers.office);
+        const newManager = new Manager(answers.name, answers.id, answers.email, answers.office);
 
         employees.push(newManager);
         addEmployeeQuestion();
@@ -125,7 +126,7 @@ function addEmployeeQuestion(){
         {
             type:"confirm",
             name: "addEmployee",
-            message:"Which type of team member would you like to add?"
+            message:"Would you like to add another employee?"
         }
     ])
 
@@ -135,17 +136,18 @@ function addEmployeeQuestion(){
             employeeQuestions();
 
         } else{
-            writeToFile("./dist/index.html", teamMembers);
+            writeToFile("./dist/index.html", employees);
         }
     })
-}
+};
 
+// once questions are complete, generate HTML to "dis" folder
 function writeToFile(fileName, data) {
 
     fs.writeFile(fileName, html(data), 
         // check for error, if not log to console success
         (err) => err ? console.error(err) : console.log("\nSuccess! Your HTML file has been generated.")
     );
-}
+};
 
-managerQuestions()
+managerQuestions();

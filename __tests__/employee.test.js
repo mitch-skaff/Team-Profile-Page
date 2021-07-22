@@ -1,24 +1,15 @@
 const Employee = require("../lib/Employee");
 
-// set up first suite with test for employee and the four corresponding functions
-describe("Employee", () => {
-
-    it("Instantiates new Employee instance", () => {
-        const e = new Employee();
-        expect(typeof(e)).toBe("object");
-    });
-
-    it("Should set a name via passed in argument", () => {
-        const name = "Mitch" 
-        const e = new Employee(name);
-
-        expect(e.name).toBe(name);
-    });
-
-    it("Should set id via passed in argument", () => {
-        
-    })
-
-
+describe("employee", () => {
+    const e = new Employee('Mitch', '1', 'email@email.com');
     
+    it("should return name of employee", () => {
+        expect(e.getName()).toEqual('Mitch');
+    })
+    it("should return id of employee", () => {
+        expect(e.getId()).toEqual('1');
+    })
+    it("should return email of employee", () => {
+        expect(e.getEmail()).toEqual('email@email.com');
+    })
 });
